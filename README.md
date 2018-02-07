@@ -15,5 +15,6 @@
 
 * chapter 3-1: Zero value
 * chapter 3-2: String
+* chapter 3-3: Foating point
 
 ## Chapter 4

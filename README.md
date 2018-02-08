@@ -18,3 +18,5 @@
 * chapter 3-3: Foating point
 
 ## Chapter 4
+
+* chapter 4-1: Variable declaration

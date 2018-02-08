@@ -20,3 +20,4 @@
 ## Chapter 4
 
 * chapter 4-1: Variable declaration
+* Chapter 4-2: Get value from user

@@ -10,5 +10,5 @@ func main() {
 	fmt.Printf("number: %v\n", number)
 	fmt.Printf("str: '%v'\n", str)
 	fmt.Printf("boolean: %v\n", boolean)
-	
+
 }

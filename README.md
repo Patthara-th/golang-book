@@ -20,4 +20,14 @@
 ## Chapter 4
 
 * chapter 4-1: Variable declaration
-* Chapter 4-2: Get value from user
+* chapter 4-2: Get value from user
+
+## Chapter 5
+
+* chapter 5-1: Go Conditions [for]
+* chapter 5-2: Go Conditions [if]
+* chapter 5-3: Go Conditions [switch case]
+* Chapter 5-4: Go Exercise Guess number in five times
+
+## Chapter 6
+

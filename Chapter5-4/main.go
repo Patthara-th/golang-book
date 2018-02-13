@@ -12,16 +12,13 @@ func main() {
 	result := rand.Intn(10)
 
 	//fmt.Printf("Result = %v\n", result)
-
-	count := 0
-
-	for count < 5 {
+	
+	for count := 0 ;count < 5; count ++ {
 
 		fmt.Println("================")
 		fmt.Println("Enter Number: ")
 		var input int
-		fmt.Scanf("%d\n", &input)
-		count += 1
+		fmt.Scanf("%d\n", &input)		
 
 		fmt.Printf("Time =  %v\n", count)
 		fmt.Printf("Input number = %v", input)
@@ -34,7 +31,7 @@ func main() {
 			fmt.Println("  <<น้อยไป>>")
 		case input > result:
 			fmt.Println("  <<มากไป>>")
-		}
+		}		
 	}
 
 	fmt.Println("")

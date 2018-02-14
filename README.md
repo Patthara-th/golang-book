@@ -27,7 +27,26 @@
 * chapter 5-1: Go Conditions [for]
 * chapter 5-2: Go Conditions [if]
 * chapter 5-3: Go Conditions [switch case]
-* Chapter 5-4: Go Exercise Guess number in five times
+* Chapter 5-4: Exercise Guess number in five times
 
 ## Chapter 6
 
+* chapter 6-1: Function
+* chapter 6-2: Function (Name return type)
+* chapter 6-3: Function return multiple value
+* chapter 6-4: Variadic Function
+* chapter 6-5: Exercise Refactor FIZZBUZZ  in Chapter5-2 by us function
+
+## Chapter 7
+
+* chapter 7-1: Arrays
+* chapter 7-2: Slice
+* chapter 7-3: Create slice from array
+* chapter 7-4: Copy slices
+* chapter 7-5: Map
+* chapter 7-6: Delete map
+* chapter 7-7: Avoid to check zero value
+* chapter 7-8: Range: Array
+* chapter 7-9: Range: Slice
+* chapter 7-10: Range: Map
+* chapter 7-11: Range: String

@@ -5,10 +5,10 @@ import (
 )
 
 func main() {
-	x,y := f1()
-	fmt.Println(x,y)
+	x, y := f1()
+	fmt.Println(x, y)
 }
 
 func f1() (int, int) {
-	return 5,7
+	return 5, 7
 }

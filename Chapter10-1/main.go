@@ -24,7 +24,7 @@ func main() {
 	fmt.Println("littleC", littleC.area())
 	littleC.changeRedius(10)
 	fmt.Println("littleC", littleC.area())
-	
+
 	bigC := &Circle{0, 0, 5}
 	fmt.Println("bigC", bigC.area())
 	bigC.changeRedius(10)

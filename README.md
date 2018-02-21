@@ -46,7 +46,29 @@
 * chapter 7-5: Map
 * chapter 7-6: Delete map
 * chapter 7-7: Avoid to check zero value
-* chapter 7-8: Range: Array
-* chapter 7-9: Range: Slice
-* chapter 7-10: Range: Map
-* chapter 7-11: Range: String
+* chapter 7-8: Range - Array
+* chapter 7-9: Range - Slice
+* chapter 7-10: Range - Map
+* chapter 7-11: Range - String
+
+## Chapter 8
+
+* chapter 8-1: Pointer - pass by copy value
+* chapter 8-2: Pointer - pass by pointer
+* chapter 8-3: Pointer - pass by array value
+* chapter 8-4: Pointer - pass by array pointer
+* chapter 8-5: Pointer - pass by slice value
+* chapter 8-6: Pointer - pass by map value
+
+## Chapter 9
+
+* chapter 9-1: Type - struct type
+* chapter 9-2: Type - specific type
+
+## Chapter 10
+
+* chapter 10-1: Method
+
+## Chapter 11
+
+* chapter 11-1: Interface

@@ -10,7 +10,6 @@ var l1 = []string{" _ ", "   ", " _ ", " _ ", "   ", " _ ", "   ", " _ ", " _ ",
 var l2 = []string{"| |", "  |", " _|", " _|", "|_|", "|_ ", "|_ ", "  |", "|_|", "|_|", " _ "}
 var l3 = []string{"|_|", "  |", "|_ ", " _|", "  |", " _|", "|_|", "  |", "|_|", "  |", "   "}
 
-
 func main() {
 	fmt.Println(weatherCelcius(25, "Bangkok few cloud"))
 	fmt.Println(weatherCelcius(34, "Tak sunny"))

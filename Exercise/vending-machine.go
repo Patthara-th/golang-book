@@ -8,6 +8,12 @@ type VendingMachine struct {
 	items   map[string]int
 }
 
+func NewVendingMachine(x, y map[string]int) *VendingMachine {
+
+	return &VendingMachine{0, x, y}
+
+}
+
 func (v *VendingMachine) InsertCoin(c string) {
 
 	v.current += v.coin[c]
@@ -20,23 +26,21 @@ func (v *VendingMachine) GetInsertedMoney() int {
 
 }
 
-func NewVendingMachine(x, y map[string]int) *VendingMachine {
-
-	return &VendingMachine{0, x, y}
-
-}
-
 func (v *VendingMachine) SelectSD() string {
 
-	if v.current == v.items["SD"] {
+	if v.current >= v.items["SD"] {
 		v.current -= v.items["SD"]
-		return "SD"
-	} else if v.current >= v.items["SD"] {
-		return "SD"
+		var change string
+		if v.current > 0 {
+			change = GetChange(v.current)
+		}
+		if change != "" {
+			change = ", " + change
+		}
+		return "SD" + change
 	}
-
 	return "Not Enough Coins"
-		
+
 }
 
 func (v *VendingMachine) SelectCC() string {
@@ -45,28 +49,44 @@ func (v *VendingMachine) SelectCC() string {
 		v.current -= v.items["CC"]
 		var change string
 		if v.current > 0 {
-			change = GetChange(v.current)  
+			change = GetChange(v.current)
+			v.current = 0
 		}
-		return "CC" + change 
+		if change != "" {
+			change = ", " + change
+		}
+		return "CC" + change
 	}
-	
+
 	return "Not Enough Coins"
-		
+
+}
+
+func (v *VendingMachine) CoinReturn() string {
+
+	result := GetChange(v.current)
+	v.current = 0
+
+	return result
+
 }
 
 func GetChange(x int) string {
 
-	value := [4]int{10,5,2,1}
-	c := [4]string{"T","F","TW","O"}
-	var change string 
+	value := [4]int{10, 5, 2, 1}
+	c := [4]string{"T", "F", "TW", "O"}
+	var change string
 
 	for x > 0 {
 
-		for i,v := range value {
-			fmt.Println(x)
+		for i, v := range value {
 			if x >= v {
-				change += "," + c[i] 
+				if change != "" {
+					change += ", "
+				}
+				change += c[i]
 				x -= v
+				break
 			}
 		}
 
@@ -109,11 +129,11 @@ func main() {
 	can = vm.SelectCC()
 	fmt.Println(can) // CC, F, TW, O
 
-	// // Start adding change but hit coin return
-	// vm.InsertCoin("T")
-	// vm.InsertCoin("T")
-	// vm.InsertCoin("F")
-	// fmt.Println("Inserted Money:", vm.GetInsertedMoney()) // 25
-	// change := vm.CoinReturn()
-	// fmt.Println(change) // T, T, F
+	// Start adding change but hit coin return
+	vm.InsertCoin("T")
+	vm.InsertCoin("T")
+	vm.InsertCoin("F")
+	fmt.Println("Inserted Money:", vm.GetInsertedMoney()) // 25
+	change := vm.CoinReturn()
+	fmt.Println(change) // T, T, F
 }

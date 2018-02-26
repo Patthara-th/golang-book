@@ -5,15 +5,16 @@ import (
 	"sort"
 )
 
-type VendingMachine struct {
+type vendingMachine struct {
 	current     int
 	coin        map[string]int
 	items       map[string]int
 	changecoins map[int]string
 	value       []int
+	insertedcoin		[]string
 }
 
-func NewVendingMachine(x, y map[string]int) *VendingMachine {
+func newVendingMachine(x, y map[string]int) *vendingMachine {
 
 	value := make([]int, 0)
 	var changecoins map[int]string
@@ -23,56 +24,69 @@ func NewVendingMachine(x, y map[string]int) *VendingMachine {
 		value = append(value, v)
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(value)))
-	return &VendingMachine{0, x, y, changecoins, value}
+	return &vendingMachine{0, x, y, changecoins, value,make([]string,0)}
 
 }
 
-func (v *VendingMachine) InsertCoin(c string) {
+func (v *vendingMachine) InsertCoin(c string) {
 
 	v.current += v.coin[c]
+	v.insertedcoin = append(v.insertedcoin,c)
 
 }
 
-func (v *VendingMachine) GetInsertedMoney() int {
+func (v *vendingMachine) GetInsertedMoney() int {
 
 	return v.current
 
 }
 
-func (v *VendingMachine) SelectSD() string {
+func (v *vendingMachine) SelectSD() string {
 
 	if v.current >= v.items["SD"] {
+		v.insertedcoin = make([]string,0)
 		v.current -= v.items["SD"]
 		if v.current > 0 {
-			return "SD" + ", " + v.CoinReturn()
+			return "SD" + v.getchange()
 		}
 		return "SD"
-	}
+	}	
 	return "Not Enough Coins"
 }
 
-func (v *VendingMachine) SelectCC() string {
+func (v *vendingMachine) SelectCC() string {
 
 	if v.current >= v.items["CC"] {
+		v.insertedcoin = make([]string,0)
 		v.current -= v.items["CC"]
 		if v.current > 0 {
-			return "CC" + ", " + v.CoinReturn()
+			return "CC" + v.getchange()
 		}
 		return "CC"
-	}
+	}	
 	return "Not Enough Coins"
 
 }
 
-func (v *VendingMachine) CoinReturn() string {
-
-	var change string
+func (v *vendingMachine) getchange() string {
+		var change string
 	for _, x := range v.value {
 		for v.current >= x {
 			change += ", " + v.changecoins[x]
 			v.current -= x
 		}
 	}
+	return change
+}
+
+func (v *vendingMachine) CoinReturn() string {
+
+	var change string
+	
+	for _, x := range v.insertedcoin {
+			change += ", " + x			
+	}
+	v.insertedcoin = make([]string,0)
 	return change[2:len(change)]
 
 }
@@ -91,12 +105,13 @@ func init() {
 	items = make(map[string]int)
 	items["SD"] = 18
 	items["CC"] = 12
+	items["DW"] = 7
 
 }
 
 func main() {
 
-	vm := NewVendingMachine(coins, items)
+	vm := newVendingMachine(coins, items)
 
 	// Buy SD(soft drink) with exact change
 	vm.InsertCoin("T")
@@ -116,8 +131,11 @@ func main() {
 
 	// Start adding change but hit coin return
 	vm.InsertCoin("T")
-	vm.InsertCoin("T")
+	vm.InsertCoin("TW")
 	vm.InsertCoin("F")	
+	vm.InsertCoin("O")
+	vm.InsertCoin("T")
+	vm.InsertCoin("O")
 	fmt.Println("Inserted Money:", vm.GetInsertedMoney()) // 25
 	change := vm.CoinReturn()
 	fmt.Println(change) // T, T, F

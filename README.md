@@ -72,3 +72,33 @@
 ## Chapter 11
 
 * chapter 11-1: Interface
+
+## Chapter 12
+
+* chapter 12-1: First class function(1)
+* chapter 12-2: First class function(2)
+* chapter 12-3: First class function(3)
+* chapter 12-4: FizzBuzz refactor Exercise
+
+## Chapter 13
+
+* chapter 13-1: Goroutine
+* chapter 13-2: Goroutine - multiple routine
+* chapter 13-3: Goroutine - GO max Process
+* chapter 13-4: Goroutine - WaitGroup
+* chapter 13-5: Goroutine - with Global Variable
+* chapter 13-6: Goroutine - Atomic
+* chapter 13-7: Goroutine - Mutex
+* chapter 13-8: Goroutine - Mutex - deadlock
+* chapter 13-9: Go Channel
+* chapter 13-10: Go Channel - Deadlock
+* chapter 13-11: Go Channel - Buffer
+* chapter 13-12: Go Channel - Buffer Overfilled
+* chapter 13-13: Goroutine Leak
+* chapter 13-14: Go Channel - Channel-Direction
+* chapter 13-15: Go Channel - Channel-Direction (2)
+* chapter 13-16: Go Channel - Channel-Select
+* chapter 13-17: Go Channel - Pipeline #1
+* chapter 13-18: Go Channel - Pipeline #2
+* chapter 13-19: Go Channel - Pipeline #3
+* chapter 13-20: Go Channel - Select with Timeout

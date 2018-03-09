@@ -1,9 +1,16 @@
 package main
 
 import (
+	"sync"
 	"fmt"
 	"time"
 )
+
+var (
+	
+	wg      sync.WaitGroup
+)
+
 
 func main() {
 	volumn := 200
@@ -23,46 +30,56 @@ func order(volumn int) (container []string) {
 	cashier := make(chan string)
 	barista := make(chan string)
 	
-	
-	
+	baristano := 50
+
 	go func() {
 		for x := 1; x <= volumn; x++ {
 			cashier <- receiveOrder(x)
 		}
 		close(cashier)
-	}()
+	}()	
 	
+	quit := make(chan int)
 	
 	go func() {
-		for x := range cashier {
-			barista <- brew(x)
-		}	
-		close(barista)	
+		for i:= 1 ; i<= volumn; i++ {
+			container = append(container,serve(<-barista))
+		}
+		for i := 1; i <= baristano; i++ { 
+			quit <- 0
+		}
 	}()
 
-	go func() {
-		for x := range cashier {
-			barista <- brew(x)
-		}	
-		
-	}()
-
-	go func() {
-		for x := range cashier {
-			barista <- brew(x)
-		}	
-			
-	}()
-	
-	
-	for x := range barista {
-			time.Sleep(5* time.Millisecond)
-			container = append( container,fmt.Sprintf("%s %s", x, "ready :)"))
+	wg.Add(baristano)
+	for i := 1; i <= baristano; i++ {
+		go conbrew(barista,cashier,quit)
 	}
-		
+	wg.Wait()
 	
+	
+	// go func() {
+	// 	for x := range cashier {
+	// 		barista <- brew(x)
+	// 	}	
+	// 	close(barista)	
+	// }()
 
+	// go func() {
+	// 	for x := range cashier {
+	// 		barista <- brew(x)
+	// 	}		
+	// }()
 
+	// go func() {
+	// 	for x := range cashier {
+	// 		barista <- brew(x)
+	// 	}				
+	// }()
+	
+	// for x := range barista {
+	// 		time.Sleep(5* time.Millisecond)
+	// 		container = append(container,fmt.Sprintf("%s %s", x, "ready :)"))
+	// }
 
 	// for i := 1 ; i <= volumn ; i ++ {
 
@@ -77,10 +94,8 @@ func order(volumn int) (container []string) {
 
 	// }
 
-	return container}
-
-
-
+	return container
+}
 
 func receiveOrder(number int) string {
 	time.Sleep(5 * time.Millisecond)
@@ -98,4 +113,16 @@ func serve(coffee string) string {
 
 }
 
+func conbrew(ch,ch1 chan string, quit chan int) {
+	 
+	for {
+		select {
+		case ch <- brew(<-ch1):
+			
+		case <-quit:
+			wg.Done()
+			return
+		}
+	}
+}
 

@@ -1,18 +1,15 @@
 package main
 
 import (
-	"sync/atomic"
-	"sync"
 	"fmt"
+	"sync"	
 	"time"
 )
 
 var (
 	counter int64
-	wg      sync.WaitGroup
-	mu      sync.Mutex
+	wg      sync.WaitGroup	
 )
-
 
 func main() {
 	volumn := 500
@@ -29,45 +26,56 @@ func main() {
 }
 
 func order(volumn int) (container []string) {
-	cashier := make(chan string)
-	barista := make(chan string)
-	
-	baristano := 50
 
+	queue := dispatch(volumn)
+
+	cup := pickup(queue)
+
+	return servecoffee(cup, container)
+	
+}
+
+func dispatch(volumn int) chan string {
+	queue := make(chan string)
 	go func() {
 		for x := 1; x <= volumn; x++ {
-			cashier <- receiveOrder(x)
+			queue <- receiveOrder(x)
 		}
-		close(cashier)
-	}()	
-	
-	// quit := make(chan int)
-	
-	
-	// go func() {
-	// 	for i:= 1 ; i<= volumn; i++ {
-	// 		container = append(container,serve(<-barista))
-	// 	}
-	// 	for i := 1; i <= baristano; i++ { 
-	// 		quit <- 0
-	// 	}
-	// }()
+		close(queue)
+	}()
+	return queue
+}
 
-	// wg.Add(baristano)
-	// for i := 1; i <= baristano; i++ {
-	// 	go conbrew(barista,cashier,quit)
-	// }
-	// wg.Wait()
+func pickup(queue <-chan string) chan string {
+	cup := make(chan string)
+	baristano := 20
 
-	
+	wg.Add(baristano)
 	for i := 1; i <= baristano; i++ {
-		go conbrew1(volumn,barista,cashier)
+		go pullshot(queue, cup)
 	}
-	
-	for i := 1 ; i<= volumn ; i++ {
-		container = append(container,serve(<-barista))
+
+	go func() {
+		wg.Wait()
+		close(cup)
+	}()
+
+	return cup
+}
+
+func pullshot(queue <-chan string, cup chan<- string) {
+	for x := range queue {
+		cup <- brew(x)
 	}
-	
+	wg.Done()
+}
+
+func servecoffee(cup <-chan string, container []string) []string {
+
+	for x := range cup {
+		container = append(container, serve(x))
+	}
+
 	return container
 }
 
@@ -83,37 +91,6 @@ func brew(order string) string {
 
 func serve(coffee string) string {
 	time.Sleep(5 * time.Millisecond)
-	return  fmt.Sprintf("%s %s", coffee, "ready :)")
-
+	return fmt.Sprintf("%s %s", coffee, "ready :)")
 }
-
-// func conbrew(ch,ch1 chan string, quit chan int) {
-	 
-// 	for {
-// 		select {
-// 		case ch <- brew(<-ch1):
-			
-// 		case <-quit:
-// 			wg.Done()
-// 			return
-// 		}
-// 	}
-// }
-
-func conbrew1(v int,ch,ch1 chan string) {
-	
-	x := int64(v)
-	for {
-		atomic.AddInt64(&counter, 1) 
-		if counter <= x { 
-			ch <- brew(<-ch1)
-		} else {
-			
-			return 
-		} 
-
-	}
-	
-}
-
 

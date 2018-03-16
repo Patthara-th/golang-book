@@ -1,15 +1,15 @@
 package main
 
-import (	
+import (
 	"flag"
 	"fmt"
+	"github.com/Patthara-th/weather"
 	"github.com/gorilla/mux"
 	"net/http"
-	"time"	
-	"github.com/Patthara-th/weather"
+	"time"
 )
 
-func HomePageHandle(w http.ResponseWriter, r *http.Request) {	
+func HomePageHandle(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	name := vars["name"]
@@ -36,7 +36,7 @@ func loggingMiddleware(next http.Handler) http.Handler {
 
 func NewRouter() http.Handler {
 	r := mux.NewRouter()
-	r.HandleFunc("/weather/{name}", HomePageHandle).Methods("GET")	
+	r.HandleFunc("/weather/{name}", HomePageHandle).Methods("GET")
 	r.Use(loggingMiddleware)
 	return r
 }

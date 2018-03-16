@@ -22,7 +22,7 @@ func main() {
 func weatherCelcius(Temp int, place string) string {
 
 	line := [3]string{"", "", ""}
-	var number string 
+	var number string
 	number = strconv.Itoa(Temp)
 
 	for _, c := range number {

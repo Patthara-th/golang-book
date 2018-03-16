@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"sync"	
+	"sync"
 	"time"
 )
 
 var (
 	counter int64
-	wg      sync.WaitGroup	
+	wg      sync.WaitGroup
 )
 
 func main() {
@@ -32,7 +32,7 @@ func order(volumn int) (container []string) {
 	cup := pickup(queue)
 
 	return servecoffee(cup, container)
-	
+
 }
 
 func dispatch(volumn int) chan string {
@@ -93,4 +93,3 @@ func serve(coffee string) string {
 	time.Sleep(5 * time.Millisecond)
 	return fmt.Sprintf("%s %s", coffee, "ready :)")
 }
-

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func HomePageHandle(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +26,6 @@ func NewRouter() http.Handler {
 func main() {
 	http.ListenAndServe(":3000", NewRouter())
 }
-
 
 // func HomePageHandle(w http.ResponseWriter, r *http.Request) {
 // 	name := r.URL.Query().Get("name")

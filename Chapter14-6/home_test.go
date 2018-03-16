@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"fmt"
 )
 
 func Test_Get(t *testing.T) {
@@ -26,7 +26,6 @@ func Test_Post(t *testing.T) {
 			res.StatusCode)
 	}
 }
-
 
 // func Test_Get(t *testing.T) {
 // 	res := httptest.NewRecorder()

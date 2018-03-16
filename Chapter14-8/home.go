@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-
-
 func HomePageHandle(w http.ResponseWriter, r *http.Request) {
 	// start := time.Now()
 	// fmt.Printf("Start at %v", start)

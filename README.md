@@ -109,3 +109,6 @@
 * chapter 14-3: json
 * chapter 14-4: test file
 * chapter 14-5: test file with json
+* chapter 14-6: use gorilla/mux to assign http method
+* chapter 14-7: Get port when start
+* chapter 14-8: Add log

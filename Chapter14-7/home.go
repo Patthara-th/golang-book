@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"github.com/gorilla/mux"
@@ -12,6 +13,7 @@ func HomePageHandle(w http.ResponseWriter, r *http.Request) {
 	if vars["name"] == "" {
 		name = "World"
 	}
+
 	fmt.Fprintf(w, "Hello, %s!", name)
 }
 func UsersHandle(w http.ResponseWriter, r *http.Request) {
@@ -24,9 +26,18 @@ func NewRouter() http.Handler {
 	return r
 }
 func main() {
-	http.ListenAndServe(":3000", NewRouter())
+	var port string
+
+	flag.StringVar(&port, "port", ":3000","default port: 3000")
+	flag.Parse()
+	
+	http.ListenAndServe(port, NewRouter())
 }
 
+
+// go build -o main.exe
+// main.exe -port=:8080
+// .\main.exe -port=:8080
 
 // func HomePageHandle(w http.ResponseWriter, r *http.Request) {
 // 	name := r.URL.Query().Get("name")

@@ -8,6 +8,11 @@ import (
 	"net/http"
 	"time"
 	"strconv"
+	"sync"
+)
+
+var (
+	wg      sync.WaitGroup
 )
 
 type Weatherresult struct {
@@ -84,12 +89,25 @@ func getallcity() string {
 
 	
 	var result string
-	//result1 := make(chan string)
+	result1 := make(chan string)
+
+	wg.Add(5)
 
 	for _,v := range city {
-		result += getcity(v)
+		go func() { 
+			result1 <- getcity(v) 
+			wg.Done() 
+		}()
 	}		
 
+	go func() {
+		wg.Wait()
+		close(result1)
+	}()
+
+	for x := range result1 {
+		result += x
+	}
 	return result
 }
 

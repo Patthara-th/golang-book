@@ -1,127 +1,29 @@
 package main
 
-import (
-	"encoding/json"
+import (	
 	"flag"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
-	"time"
-	"strconv"
-	"sync"
+	"time"	
+	"github.com/Patthara-th/weather"
 )
 
-var (
-	wg      sync.WaitGroup
-)
-
-type Weatherresult struct {
-	Coord struct {
-		Lon float64 `json:"lon"`
-		Lat float64 `json:"lat"`
-	} `json:"coord"`
-
-	Weather []struct {
-		ID          int    `json:"id"`
-		Main        string `json:"main"`
-		Description string `json:"description"`
-		Icon        string `json:"icon"`
-	} `json:"weather"`
-
-	Base string `json:"base"`
-
-	Main struct {
-		Temp     float64 `json:"temp"`
-		Pressure int `json:"pressure"`
-		Humidity int `json:"humidity"`
-		TempMin  int `json:"temp_min"`
-		TempMax  int `json:"temp_max"`
-	} `json:"main"`
-
-	Visibility int `json:"visibility"`
-
-	Wind       struct {
-		Speed float64 `json:"speed"`
-		Deg   int     `json:"deg"`
-	} `json:"wind"`
-
-	Clouds struct {
-		All int `json:"all"`
-	} `json:"clouds"`
-
-	Dt  int `json:"dt"`
-
-	Sys struct {
-		Type    int     `json:"type"`
-		ID      int     `json:"id"`
-		Message float64 `json:"message"`
-		Country string  `json:"country"`
-		Sunrise int     `json:"sunrise"`
-		Sunset  int     `json:"sunset"`
-	} `json:"sys"`
-	
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Cod  int    `json:"cod"`
-}
-
-func HomePageHandle(w http.ResponseWriter, r *http.Request) {
-	// start := time.Now()
-	// fmt.Printf("Start at %v", start)
+func HomePageHandle(w http.ResponseWriter, r *http.Request) {	
 
 	vars := mux.Vars(r)
 	name := vars["name"]
 	var result string
 
 	if name == "all" {
-		result = getallcity()
+		result = weather.Getallcity()
 	} else {
-		result = getcity(name)
+		result = weather.Getcity(name)
 	}
 
 	fmt.Fprintf(w, result)
 
-	// fmt.Printf("Completed in %v", time.Since(start))
 }
-
-func getallcity() string {
-	city := [...]string{"hobart","newyork","kupang","nairobi","bangkok"}
-
-	
-	var result string
-	result1 := make(chan string)
-
-	wg.Add(5)
-
-	for _,v := range city {
-		go func() { 
-			result1 <- getcity(v) 
-			wg.Done() 
-		}()
-	}		
-
-	go func() {
-		wg.Wait()
-		close(result1)
-	}()
-
-	for x := range result1 {
-		result += x
-	}
-	return result
-}
-
-func getcity(city string) string {
-
-	URL := "http://localhost:8882/api/v1/weather/"
-	res, _ := http.Get(URL + city)
-	
-	weather := new(Weatherresult)
-	json.NewDecoder(res.Body).Decode(weather)	
-	
-	return weather.Name  + "\n" + strconv.FormatFloat(weather.Main.Temp, 'f', 0, 64) +  "c " + weather.Weather[0].Description + "\n\n"
-}
-
 
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

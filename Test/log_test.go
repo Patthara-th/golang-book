@@ -93,7 +93,7 @@ func Test_addlog(t *testing.T) {
 			
 			t.Fatalf("File does not exist.")
         }
-	}
+	
 	
 	b, err := ioutil.ReadFile(filename) // just pass the file name
     // if err != nil {
